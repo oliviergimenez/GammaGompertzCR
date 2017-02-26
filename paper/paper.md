@@ -24,6 +24,6 @@ affiliations:
 
 # Summary
   
-`gg_cr` is an R package (@R) that allows estimating survival in free-ranging animal populations using a Gompertz capture-recapture model with a Gamma frailty to deal with individual heterogeneity (@MarzolinCharmantierGimenez2011, @Missov2013). It uses data cloning in the Bayesian framework to get maximum likelihood parameter estimates (@LeleDennisLutscher2007). Data cloning uses multiple copies of the data to produce prior-invariant inferences and a normal distribution centered at the maximum likelihood estimates. In addition, this method allows detecting non-identifiable parameters (@LeleNadeemSchmuland2010). The latest version of the package is available at 'https://github.com/oliviergimenez/GammaGompertzCR'.
+`GammaGompertzCR` is an R package (@R) that allows estimating survival in free-ranging animal populations using a Gompertz capture-recapture model with a Gamma frailty to deal with individual heterogeneity (@MarzolinCharmantierGimenez2011, @Missov2013). It uses data cloning in the Bayesian framework to get maximum likelihood parameter estimates (@LeleDennisLutscher2007). Data cloning uses multiple copies of the data to produce prior-invariant inferences and a normal distribution centered at the maximum likelihood estimates. In addition, this method allows detecting non-identifiable parameters (@LeleNadeemSchmuland2010). The latest version of the package is available at 'https://github.com/oliviergimenez/GammaGompertzCR'.
 
 # References
