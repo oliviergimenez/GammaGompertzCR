@@ -4,7 +4,7 @@ Version: 1.0.0
 Authors@R: c(person("Gilbert", "Marzolin", email = "gmarzolin@numericable.fr", role = c("aut")),person("Olivier", "Gimenez", email = "gmarzolin@numericable.fr", role = c("aut", "cre")))
 Description: Fit of a Gamma-Gompertz model to capture-recapture data using data cloning.
 Depends:
-    R (>= 3.3.0), dcmle
+    R (>= 3.3.0), dcmle, R2WinBUGS
 License: MIT
 Encoding: UTF-8
 LazyData: true
