@@ -10,7 +10,7 @@ output: html_document
 `GammaGompertzCR` is an R package that allows estimating survival in free-ranging animal populations using a Gompertz capture-recapture model with a Gamma frailty to deal with individual heterogeneity. 
 It uses data cloning in the Bayesian framework to get maximum likelihood parameter estimates (Lele et al. 2007). Data cloning uses multiple copies of the data to produce prior-invariant inferences and a normal distribution centered at the maximum likelihood estimates. In addition, this method allows detecting non-identifiable parameters (Lele et al. 2010). 
 
-This repository hosts the development version of the package. Assuming JAGS is already on your system (otherwise: <http://mcmc-jags.sourceforge.net/>, you can install `GammaGompertzCR` as follows:
+This repository hosts the development version of the package. Assuming JAGS is already on your system (otherwise: <http://mcmc-jags.sourceforge.net/>), you can install `GammaGompertzCR` as follows:
 ```{r}
 if(!require(devtools)) install.packages("devtools")
 library("devtools")
