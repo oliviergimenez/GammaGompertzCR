@@ -25,6 +25,11 @@ When studying individual heterogeneity in survival in a population, we can use i
 
 # A session example
 
+Load the package
+```{r}
+library(GammaGompertzCR)
+```
+
 Read in data: an extract of the dipper dataset used by Marzolin et al. (2011)
 ```{r}
 mydat <- matrix(c(1,1,1,1,1,1,1,1,2,
