@@ -30,7 +30,7 @@ First, we need to load the package:
 library(GammaGompertzCR)
 ```
 
-Then, we read in some data. Below we use a fragment of the dipper dataset used by Marzolin et al. (2011). Detections are the 2's, non-detection the 1's.
+Then, we read in some data. Below we use a fragment of the dipper dataset used by Marzolin et al. (2011). Detections are the 1's, non-detections the 2's.
 ```{r}
 mydat <- matrix(c(1,1,1,1,1,1,1,1,2,
 1,1,1,1,1,1,1,2,2,
