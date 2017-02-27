@@ -19,7 +19,7 @@ for (i in 1:nind){  # for each unit
 
 	for (j in first[i]:(nyears-1)){
 		
-        # survival for unit i from year j to j+1
+        # phi[i,j] is survival for unit i from year j to j+1
 		phi[i,j] <- exp(k*(log(abs(b*k-a+a*exp(b*age[i,j])))-log(abs(b*k-a+a*exp(b*(age[i,j]+1))))))
 
         ## STATE EQUATIONS ##
@@ -30,7 +30,7 @@ for (i in 1:nind){  # for each unit
 		# draw Obs[i,j+1] given st[i,j+1]
 		mydat[i,j+1]~ dcat(c(p[i,j],1-p[i,j])*equals(st[i,j+1],1)+ c(0,1)*equals(st[i,j+1],2))
 		
-		# detection prob at j+1
+		# p[i,j] is detection prob at j+1
 		logit(p[i,j]) <- psi + eta[j]  #same detection for all units with time random effect.
 
      }	#j

@@ -1,7 +1,7 @@
 #' fit_ggcr
 #'
 #' This function fits a Gamma-Gompertz model to capture-recapture data using data cloning. 
-#' @param mydata a matrix of 1's and 2's for non-detections and detection
+#' @param mydata a matrix of 1's and 2's for detections and non-detections (the first 1 being the birth year)
 #' @param clo number of clones
 #' @param nu number of updates
 #' @param ni number of iterations
@@ -22,7 +22,8 @@ dat_features <- prep_data(mydat)
 
 # updating the priors from one clone to the next to speed up convergence 
 # length(par)=5:the last param is sigeta but updating works on pri
-# the last of which being log.sigeta : 
+# the last of which being log.sigeta
+# dcsd is datacloning sd ie product of standard deviation by square root of nclones
 upfun <- function(x) {
 	if (missing(x)) {
 		np <- 5

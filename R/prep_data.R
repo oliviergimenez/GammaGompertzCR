@@ -1,8 +1,8 @@
 #' prep_data
 #'
 #' This function gets number of individuals, number of capture occasions, occasions of first capture and age from a capture-recapture dataset
-#' @param mydata a matrix of 1's and 2's for non-detections and detection
-#' @return This function returns a list with components the number of individuals, the number of capture occasions, the occasions of first capture and age.
+#' @param mydata a matrix of 1's and 2's for detections and non-detection
+#' @return This function returns a list with components the number of individuals, the number of capture occasions, the occasion of first capture for each individual and the age of each individual over time.
 #' @author Gilbert Marzolin, Olivier Gimenez
 #' @keywords package
 #' @export
