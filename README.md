@@ -136,7 +136,8 @@ Let's represent survival as a function of age at the population level: TO BE DON
 post_inf[[1]]
 ```
 
-Data cloning allows testing identifiability rather easily (Lele 2010). LINES OF CODE BELOW TO BE EXPLAINED.   
+Data cloning allows testing identifiability rather easily (Lele 2010). The convergence of the data cloning algorithm is achieved when the largest eigenvalue of the post variance matrix tends to 0 at the approximate rate of 1 / `nclones`: hence we get a threshold indicating the minimal number of clones to agree with the desired results. When some parameters are not estimable, then the largest eigenvalue does not tend to 0. Two other statistics `ms.error` and `r.squared` are used to test the normality of the limit.
+  
 ```{r}
 dct <- dctable(post_inf)
 plot(dct)
