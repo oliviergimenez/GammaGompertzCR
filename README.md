@@ -110,7 +110,7 @@ clo = c(2,5) # number of clones
 nu = 1000 # number of updates
 ni = 5000 # number of iterations
 nt = 50 # thinning
-nc = 2 # number of chains
+nc = 3 # number of chains
 # fitting procedure
 post_inf = fit_ggcr(mydat,clo,nu,ni,nt,nc)
 ```
@@ -122,7 +122,7 @@ summary(post_inf)
 
 Get traceplots and posterior distributions for all parameters:
 ```{r}
-plot(post_inf)
+plot(post_inf,ask=T)
 ```
 
 Let's represent survival as a function of age at the population level:
