@@ -28,7 +28,7 @@ for (i in 1:nind){  # for each unit
         
         ## OBSERVATION EQUATIONS ##
 		# draw Obs[i,j+1] given st[i,j+1]
-		mydat[i,j+1]~ dcat(c(p[i,j],1-p[i,j])*equals(st[i,j+1],1)+ c(0,1)*equals(st[i,j+1],2))
+		mydat[i,j+1]~ dcat(c(p[i,j],1-p[i,j])*equals(st[i,j+1],1)+ c(0,1)*equals(st[i,j+1],2))
 		
 		# p[i,j] is detection prob at j+1
 		logit(p[i,j]) <- psi + eta[j]  #same detection for all units with time random effect.
