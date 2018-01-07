@@ -4,29 +4,43 @@
 \alias{fit_ggcr}
 \title{fit_ggcr}
 \usage{
-fit_ggcr(mydat, clo, nu, ni, nt, nc)
+fit_ggcr(mydata, clo = c(1, 10, 50, 100), nu = 1000, ni = 5000, nt = 5,
+  nc = 3, initmeans = c(0.15, 0.5, 4.9, 1.4, -0.4), initprec = 1000)
 }
 \arguments{
-\item{clo}{number of clones}
+\item{mydata}{a matrix of 1's and 2's for detections and non-detections (the first 1 being the birth year)}
 
-\item{nu}{number of updates}
+\item{clo}{vector of numbers of clones in each lot: increasing order is advisable and start with 1 clone is not compulsory. Default is c(1,10,50,100)}
 
-\item{ni}{number of iterations}
+\item{nu}{number of updates in the Markov chains. Default is 1000.}
 
-\item{nt}{number of thinning iterations}
+\item{ni}{number of iterations in the Markov chains. Default is 5000.}
 
-\item{nc}{number of chains}
+\item{nt}{number of thinning (see Link and Eaton 2012). Default is 5.}
 
-\item{mydata}{a matrix of 1's and 2's for non-detections and detection}
+\item{nc}{number of Markov chains. Default is 3.}
+
+\item{initmeans}{for the first lot of clones, vector of the normally distributed means of the parameter priors, the last parameter being logged. Default is c(0.15,0.5,4.9,1.4,-0.4).}
+
+\item{initprec}{a common precision of the prior normal distributions is set for all the parameters. Default is 1000.}
 }
 \value{
 This function returns values from the posterior distribution of the parameters of a Gamma-Gompertz model.
+\itemize{
+  \item a is the coefficient in the baseline mortality rate
+  \item b is the coefficient in the exponent of the mortality rate
+  \item k is the inverse of the Gamma variance
+  \item psi is the mean of the detection rate on the logit scale
+  \item sigeta is the standard deviation of the detection rate on the logit scale
+}
 }
 \description{
-This function fits a Gamma-Gompertz model to capture-recapture data using data cloning.
+This function fits a Gamma-Gompertz model to capture-recapture data using data cloning. To improve parameter estimates clones of the data are used. To speed up convergence at each new number of clones the means and precisions of the priors supposed normally distributed (the last parameter in alphabetical order is logged) are updated. Only for the first number of clones the means must be put in vector initmeans, and a common precision is set in initprec. The specifics of the Markov chains along with the different series of clones are defined
+}
+\references{
+Link, W. A. and Eaton, M. J. (2012), On thinning of chains in MCMC. Methods in Ecology and Evolution, 3: 112–115. doi:10.1111/j.2041-210X.2011.00131.x
 }
 \author{
 Gilbert Marzolin, Olivier Gimenez
 }
 \keyword{package}
-

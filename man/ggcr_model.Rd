@@ -7,10 +7,12 @@
 ggcr_model()
 }
 \description{
-This function implements a gamma-gompertz capture-recapture model in the BUGS syntax
+This function implements a gamma-gompertz capture-recapture model in the BUGS syntax. The survival of unit 'i' at age 'j' is expressed through the parameters of a Gompertz baseline mortality and a Gamma frailty. Then it is used along with the detection probability to tie the animal real states (alive or dead when unobserved) to the observed capture-recapture matrix, hence to deduce the survival parameters by maximum likelihood through data-cloning. The model is parameterized with a (coefficient of the baseline mortality rate), b (coefficient in the exponent of the baseline mortality rate) and k (inverse of variance of the Gamma function) for the Gamma-Gompertz survival along with the nuisance detection parameters psi (mean of logit detection) and sigeta (standard deviation of logit detection). Through marginalization (Missov 2013) the population survival function enables the plot of survival by ages.
+}
+\references{
+Missov, TI. 2013. Gamma-Gompertz Life Expectancy at Birth. Demographic Research 28:259-270. doi:10.4054/DemRes.2013.28.9
 }
 \author{
 Gilbert Marzolin, Olivier Gimenez
 }
 \keyword{package}
-
