@@ -9,8 +9,7 @@ output:
 
 # In brief
   
-`GammaGompertzCR` is an R package that allows estimating survival in free-ranging animal populations using a Gompertz capture-recapture model with a Gamma frailty to deal with individual heterogeneity. 
-It uses data cloning in the Bayesian framework to get maximum likelihood parameter estimates (Lele et al. 2007). Data cloning uses multiple copies of the data to produce prior-invariant inferences and a normal distribution centered at the maximum likelihood estimates. In addition, this method allows detecting non-identifiable parameters (Lele et al. 2010).
+`GammaGompertzCR` is an R package that allows estimating survival in free-ranging animal populations using a Gompertz capture-recapture model with a Gamma frailty to deal with individual heterogeneity. It uses data cloning in the Bayesian framework to get maximum likelihood parameter estimates (Lele et al. 2007). Data cloning uses multiple copies of the data to produce prior-invariant inferences and a normal distribution centered at the maximum likelihood estimates. In addition, this method allows detecting non-identifiable parameters (Lele et al. 2010). To use the package, users should be familiar with Bayesian MCMC techniques and in particular how to interpret convergence diagnostics. We refer to Robert and Casella (2010) for an introduction to Bayesian MCMC techniques with R and to King et al. (2009) for an introduction for ecologists.
 
 # Installation
 
@@ -106,20 +105,20 @@ summary(post_inf[[length(clo)]])
 ##    plus standard error of the mean:
 ## 
 ##          Mean      SD  DC SD  Naive SE Time-series SE  R hat
-## a      0.1180 0.01696 0.1696 0.0003096      0.0003163 0.9994
-## b      0.4874 0.02824 0.2824 0.0005155      0.0005375 1.0011
-## k      4.8995 0.03127 0.3127 0.0005709      0.0005718 1.0002
-## psi    1.4014 0.03194 0.3194 0.0005831      0.0005657 1.0009
-## sigeta 0.6722 0.02146 0.2146 0.0003919      0.0003691 1.0005
+## a      0.1184 0.01726 0.1726 0.0003151      0.0003410 1.0021
+## b      0.4858 0.02774 0.2774 0.0005065      0.0005065 1.0019
+## k      4.9005 0.03196 0.3196 0.0005835      0.0005836 0.9997
+## psi    1.4030 0.03158 0.3158 0.0005765      0.0005666 1.0003
+## sigeta 0.6720 0.02096 0.2096 0.0003826      0.0004017 1.0027
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##           2.5%    25%    50%    75%  97.5%
-## a      0.08734 0.1059 0.1175 0.1293 0.1538
-## b      0.43155 0.4686 0.4870 0.5065 0.5429
-## k      4.83922 4.8784 4.9000 4.9203 4.9608
-## psi    1.33744 1.3791 1.4019 1.4234 1.4607
-## sigeta 0.63069 0.6572 0.6719 0.6868 0.7147
+## a      0.08774 0.1066 0.1176 0.1295 0.1539
+## b      0.43299 0.4670 0.4854 0.5042 0.5401
+## k      4.84050 4.8774 4.9002 4.9230 4.9622
+## psi    1.34053 1.3818 1.4038 1.4234 1.4657
+## sigeta 0.63229 0.6578 0.6719 0.6859 0.7142
 ```
 
 Let's represent survival as a function of age at the population level. 
@@ -135,7 +134,7 @@ S = exp(-k*log(1+(exp(b*grid_age)-1)*a/(b*k)))
 plot(grid_age,S,xlab='age',ylab='estimated survival',lwd=2,type='l')
 ```
 
-![](README2_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+![](README_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 ## Convergence diagnostics
 
@@ -145,7 +144,7 @@ First have a look at the traceplots for all parameter estimates got with the las
 plot(post_inf[[length(clo)]], ask = FALSE)
 ```
 
-![](README2_files/figure-html/unnamed-chunk-7-1.png)<!-- -->![](README2_files/figure-html/unnamed-chunk-7-2.png)<!-- -->
+![](README_files/figure-html/unnamed-chunk-7-1.png)<!-- -->![](README_files/figure-html/unnamed-chunk-7-2.png)<!-- -->
 
 Now checking some correlations:
 
@@ -154,19 +153,19 @@ coda::autocorr.diag(post_inf[[length(clo)]])
 ```
 
 ```
-##                    a           b            k          psi        sigeta
-## Lag 0    1.000000000  1.00000000  1.000000000  1.000000000  1.0000000000
-## Lag 5    0.033694913  0.01362996  0.009879386 -0.032736556 -0.0031494722
-## Lag 25   0.006880259  0.01077981 -0.016577855 -0.009879566  0.0001708971
-## Lag 50  -0.003244604 -0.01037031 -0.031829974 -0.006790114  0.0302519217
-## Lag 250 -0.011886721  0.01660218  0.007103807  0.021240631 -0.0032894622
+##                  a           b            k          psi       sigeta
+## Lag 0   1.00000000 1.000000000  1.000000000  1.000000000  1.000000000
+## Lag 5   0.04511053 0.006199508  0.003305411 -0.032707078  0.025391909
+## Lag 25  0.01532144 0.032783320 -0.021123985 -0.007077515 -0.019410382
+## Lag 50  0.01916528 0.017745286 -0.008175271  0.005684847  0.006116532
+## Lag 250 0.00432125 0.001832669 -0.005983787  0.018575564  0.003437716
 ```
 
 ```r
 coda::crosscorr.plot(post_inf[[length(clo)]]) 
 ```
 
-![](README2_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+![](README_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
 
 ```r
 coda::gelman.diag(post_inf[[length(clo)]])
@@ -176,11 +175,11 @@ coda::gelman.diag(post_inf[[length(clo)]])
 ## Potential scale reduction factors:
 ## 
 ##        Point est. Upper C.I.
-## a           0.999          1
-## b           1.001          1
-## k           1.000          1
-## psi         1.001          1
-## sigeta      1.000          1
+## a               1       1.01
+## b               1       1.01
+## k               1       1.00
+## psi             1       1.00
+## sigeta          1       1.01
 ## 
 ## Multivariate psrf
 ## 
@@ -214,14 +213,14 @@ dct <- dclone::dctable(post_inf[[1]],post_inf[[2]],post_inf[[3]],post_inf[[4]])
 plot(dct)        
 ```
 
-![](README2_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+![](README_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 ```r
 #log of scaled variances against number of clones.
 plot(dct, type= "log.var")  
 ```
 
-![](README2_files/figure-html/unnamed-chunk-10-2.png)<!-- -->
+![](README_files/figure-html/unnamed-chunk-10-2.png)<!-- -->
 
 ## Checking parameter identifiability
 
@@ -245,14 +244,16 @@ mat.dcdiag
 ```
 
 ```
-##      clones   lambda.max    ms.error    r.squared    r.hat
-## [1,]      1 0.0009692336 0.009517570 0.0009526500 1.003052
-## [2,]     10 0.0010381936 0.002541202 0.0002382847 1.002265
-## [3,]     50 0.0010211120 0.006163615 0.0005751915 1.001143
-## [4,]    100 0.0010262805 0.035804208 0.0026032228 1.001674
+##      clones  lambda.max    ms.error    r.squared    r.hat
+## [1,]      1 0.000980802 0.004248469 0.0002099880 1.004150
+## [2,]     10 0.001058182 0.007496436 0.0007495406 1.000316
+## [3,]     50 0.001041817 0.049345784 0.0044756094 1.002521
+## [4,]    100 0.001031733 0.016930053 0.0015876053 1.004819
 ```
 
 # References
+
+King R, Morgan BJT, Gimenez O and Brooks S (2009). Bayesian Analysis for Population Ecology. Chapman & Hall/CRC Interdisciplinary Statistics.
 
 Lele, SR, D Dennis, and F Lutscher. 2007. Data Cloning: Easy Maximum Likelihood Estimation for Complex Ecological Models Using Bayesian Markov Chain Monte Carlo Methods. Ecology Letters 10: 551–63.
 
@@ -264,4 +265,8 @@ Missov, TI. 2013. Gamma-Gompertz Life Expectancy at Birth. Demographic Research 
 
 R Core Team. 2016. R: A Language and Environment for Statistical Computing. Vienna, Austria: R Foundation for Statistical Computing. http://www.R-project.org/.
 
+Robert CP and Casella G (2010). Introducing Monte Carlo Methods with R. Springer.
+
 Solymos, P. 2010. dclone: Data Cloning in R. The R Journal 2: 29-37.
+
+

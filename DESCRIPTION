@@ -1,11 +1,17 @@
 Package: GammaGompertzCR
 Title: Gamma-Gompertz capture-recapture model
 Version: 1.0.0
-Authors@R: c(person("Gilbert", "Marzolin", email = "gmarzolin@numericable.fr", role = c("aut")),person("Olivier", "Gimenez", email = "gmarzolin@numericable.fr", role = c("aut", "cre")))
+Authors@R: c(person("Gilbert", "Marzolin", email = "gmarzolin@numericable.fr", role = c("aut")),person("Olivier", "Gimenez", email = "olivier.gimenez@cefe.cnrs.fr", role = c("aut", "cre")))
 Description: Fit of a Gamma-Gompertz model to capture-recapture data using data cloning.
 Depends:
-    R (>= 3.3.0), dcmle, R2WinBUGS
-License: MIT
+    R (>= 3.3.0)
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 5.0.1.9000
+RoxygenNote: 6.0.1
+Imports: dcmle, 
+         parallel, 
+         dclone,
+         coda
+URL: https://github.com/oliviergimenez/GammaGompertzCR
+BugReports: https://github.com/oliviergimenez/GammaGompertzCR/issues
