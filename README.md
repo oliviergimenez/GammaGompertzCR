@@ -7,9 +7,6 @@ output:
     keep_md: yes
 ---
 
-
-
-
 # In brief
   
 `GammaGompertzCR` is an R package that allows estimating survival in free-ranging animal populations using a Gompertz capture-recapture model with a Gamma frailty to deal with individual heterogeneity. It uses data cloning in the Bayesian framework to get maximum likelihood parameter estimates (Lele et al. 2007). Data cloning uses multiple copies of the data to produce prior-invariant inferences and a normal distribution centered at the maximum likelihood estimates. In addition, this method allows detecting non-identifiable parameters (Lele et al. 2010). To use the package, users should be familiar with Bayesian MCMC techniques and in particular how to interpret convergence diagnostics. We refer to Robert and Casella (2010) for an introduction to Bayesian MCMC techniques with R and to King et al. (2009) for an introduction for ecologists.
@@ -69,16 +66,16 @@ head(dipper_tiny)
 Now let's fit the Gamma-Gompertz model to these capture-recapture data:
 
 ```r
-clo = c(1,10,50,100) # numbers of clones
-nu = 1000 # number of updates
-ni = 5000 # number of iterations
-nt = 5 # thinning
-nc = 3 # number of chains
-initmeans = c(0.15,0.5,4.9,1.4,-0.4) # means of normally distributed priors for parameters
-initprec = 1000 # common precision of the normal priors for the first number of clones
+clo <- c(1,10,50,100) # numbers of clones
+nu <- 1000 # number of updates
+ni <- 5000 # number of iterations
+nt <- 5 # thinning
+nc <- 3 # number of chains
+initmeans <- c(0.15,0.5,4.9,1.4,-0.4) # means of normally distributed priors for parameters
+initprec <- 1000 # common precision of the normal priors for the first number of clones
 
 # fitting procedure (this may take a few minutes)
-post_inf = fit_ggcr(dipper_tiny,clo,nu,ni,nt,nc,initmeans,initprec)
+post_inf <- fit_ggcr(dipper_tiny,clo,nu,ni,nt,nc,initmeans,initprec)
 ```
 
 ```
@@ -113,20 +110,20 @@ summary(post_inf[[length(clo)]])
 ##    plus standard error of the mean:
 ## 
 ##          Mean      SD  DC SD  Naive SE Time-series SE  R hat
-## a      0.1185 0.01723 0.1723 0.0003145      0.0003225 0.9995
-## b      0.4868 0.02826 0.2826 0.0005160      0.0005081 1.0010
-## k      4.8995 0.03179 0.3179 0.0005805      0.0005688 1.0013
-## psi    1.4014 0.03241 0.3241 0.0005917      0.0005918 0.9996
-## sigeta 0.6724 0.02091 0.2091 0.0003818      0.0003763 1.0022
+## a      0.1182 0.01689 0.1689 0.0003083      0.0003271 1.0047
+## b      0.4861 0.02858 0.2858 0.0005219      0.0005378 1.0014
+## k      4.8997 0.03112 0.3112 0.0005682      0.0005838 1.0005
+## psi    1.4025 0.03171 0.3171 0.0005790      0.0005900 1.0002
+## sigeta 0.6721 0.02067 0.2067 0.0003774      0.0003914 0.9996
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##           2.5%    25%    50%    75%  97.5%
-## a      0.08706 0.1067 0.1174 0.1297 0.1542
-## b      0.43182 0.4675 0.4863 0.5062 0.5424
-## k      4.83570 4.8774 4.8999 4.9214 4.9612
-## psi    1.33556 1.3805 1.4011 1.4230 1.4648
-## sigeta 0.63374 0.6579 0.6718 0.6869 0.7139
+## a      0.08783 0.1062 0.1174 0.1291 0.1538
+## b      0.43088 0.4673 0.4862 0.5055 0.5430
+## k      4.83993 4.8797 4.8995 4.9201 4.9617
+## psi    1.34211 1.3806 1.4019 1.4239 1.4660
+## sigeta 0.63315 0.6579 0.6717 0.6861 0.7140
 ```
 
 Let's represent survival as a function of age at the population level. 
@@ -134,15 +131,15 @@ Let's represent survival as a function of age at the population level.
 
 ```r
 # get values from posterior distributions
-a<- coef(post_inf[[length(clo)]])[1]
-b<- coef(post_inf[[length(clo)]])[2] 
-k<- coef(post_inf[[length(clo)]])[3]
-grid_age = seq(0,8,1)
-S = exp(-k*log(1+(exp(b*grid_age)-1)*a/(b*k)))
+a <- coef(post_inf[[length(clo)]])[1]
+b <- coef(post_inf[[length(clo)]])[2] 
+k <- coef(post_inf[[length(clo)]])[3]
+grid_age <- seq(0,8,1)
+S <- exp(-k*log(1+(exp(b*grid_age)-1)*a/(b*k)))
 plot(grid_age,S,xlab='age',ylab='estimated survival',lwd=2,type='l')
 ```
 
-![](README_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+![](README_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 ## Convergence diagnostics
 
@@ -152,30 +149,29 @@ First have a look at the traceplots for all parameter estimates that we obtained
 plot(post_inf[[length(clo)]], ask = TRUE)
 ```
 
-![](README_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
-
-![](README_files/figure-html/unnamed-chunk-8-2.png)<!-- -->
+![](README_files/figure-html/unnamed-chunk-7-1.png)<!-- -->![](README_files/figure-html/unnamed-chunk-7-2.png)<!-- -->
 
 Now checking some correlations:
 
 ```r
+library(coda)
 autocorr.diag(post_inf[[length(clo)]])    
 ```
 
 ```
-##                     a            b            k          psi      sigeta
-## Lag 0    1.0000000000  1.000000000  1.000000000  1.000000000 1.000000000
-## Lag 5    0.0344650219 -0.027349395 -0.015760295  0.001375407 0.001969149
-## Lag 25   0.0097737538  0.004886749  0.021157276 -0.004250552 0.011828727
-## Lag 50  -0.0004097896 -0.029179821 -0.013871670  0.010121597 0.004734142
-## Lag 250  0.0022794338  0.007089348  0.001216246 -0.005261328 0.018063070
+##                    a           b            k          psi       sigeta
+## Lag 0    1.000000000  1.00000000  1.000000000  1.000000000  1.000000000
+## Lag 5    0.046175987  0.03720741 -0.003431181  0.017214707  0.027955122
+## Lag 25  -0.028721273 -0.03515151 -0.026505472 -0.002058186 -0.025006507
+## Lag 50  -0.006907885  0.03447667 -0.014191058  0.010450045  0.004082727
+## Lag 250 -0.013078322 -0.01389665  0.045134460  0.027270016  0.015126684
 ```
 
 ```r
 crosscorr.plot(post_inf[[length(clo)]]) 
 ```
 
-![](README_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![](README_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
 
 ```r
 gelman.diag(post_inf[[length(clo)]])
@@ -185,52 +181,61 @@ gelman.diag(post_inf[[length(clo)]])
 ## Potential scale reduction factors:
 ## 
 ##        Point est. Upper C.I.
-## a               1       1.00
-## b               1       1.00
-## k               1       1.01
+## a               1       1.02
+## b               1       1.01
+## k               1       1.00
 ## psi             1       1.00
-## sigeta          1       1.01
+## sigeta          1       1.00
 ## 
 ## Multivariate psrf
 ## 
-## 1
+## 1.01
 ```
 
-Parameters a and b seem to be slightly auto- and cross-correlated. 
+Parameters $a$ and $b$ seem to be slightly auto- and cross-correlated. 
 
 ## Sensitivity to priors
 
 It is good advice to check if changing the priors leads to similar posterior results. In our case, the choice of `initmeans` is made through trial and error, because the models we're dealing with have likelihood with multiple spikes. For instance, we might begin with vague priors: `initmeans = c(1,1,5,2,-0.5), initprec=10, clo= c(1,50,100)`, which yields `c(0.11,0.51,4.39,1.44,0.41)` with quite large standard deviation. Modifying the prior means can affect the posterior estimates. Hence, additional tests are required. For each number of clones, the posterior variances of the parameters are divided by that obtained with `min(clo)` to get scaled variances. When increasing the number of clones, the means of the parameters converge to the maximum likelihood estimates while their scaled variances decrease to reach a lower bound. We get a visual threshold indicating the minimal number of clones to agree with
 the desired results (Solymos 2010) by plotting the scaled variances or their logs against the number of clones.
 
-First, create a list by hand or via a few lines of code when there are several lots of clones: `post_inf[[1]], ..., post_inf[[length(clo)]]`. Say we have 4 lots of clones:
+Say we have 4 lots of clones:
 
 ```r
-clo = c(1,10,50,100) 
-lu = NULL   
-for (i in 1:length(clo)) lu = c(lu,paste(c("post_inf[[",i,"]],"),sep="",collapse=""))
-lu
+clo <- c(1,10,50,100) 
 ```
 
-```
-## [1] "post_inf[[1]]," "post_inf[[2]]," "post_inf[[3]]," "post_inf[[4]],"
-```
-
-Second, use function `dct` to do the job:
+We use function `dctable` to do the job:
 
 ```r
-dct <- dctable(post_inf[[1]],post_inf[[2]],post_inf[[3]],post_inf[[4]]) 
+library(dclone)
+```
+
+```
+## Loading required package: parallel
+```
+
+```
+## Loading required package: Matrix
+```
+
+```
+## dclone 2.1-2 	 2016-03-11
+```
+
+```r
+dct <- do.call(dctable,post_inf) 
 plot(dct)        
 ```
 
-![](README_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+![](README_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 ```r
 #log of scaled variances against number of clones.
 plot(dct, type= "log.var")  
 ```
 
-![](README_files/figure-html/unnamed-chunk-11-2.png)<!-- -->
+![](README_files/figure-html/unnamed-chunk-10-2.png)<!-- -->
 
 ## Checking parameter identifiability
 
@@ -242,23 +247,23 @@ Get the necessary elements and checking:
 ```r
 u<-v<-w<-x<-y<-numeric(0)
 for (i in 1:length(clo)){
-  u[i]<-clo[i]
-  v[i]<-dcdiag(post_inf[[i]])$lambda.max
-  w[i]<-dcdiag(post_inf[[i]])$ms.error
-  x[i]<-dcdiag(post_inf[[i]])$r.squared
-  y[i]<-dcdiag(post_inf[[i]])$r.hat
+  u[i] <- clo[i]
+  v[i] <- dcdiag(post_inf[[i]])$lambda.max
+  w[i] <- dcdiag(post_inf[[i]])$ms.error
+  x[i] <- dcdiag(post_inf[[i]])$r.squared
+  y[i] <- dcdiag(post_inf[[i]])$r.hat
 }
 mat.dcdiag <- matrix(c(u,v,w,x,y),c(length(clo),5)) 
-dimnames(mat.dcdiag)= list(NULL,c("clones","lambda.max","ms.error","r.squared","r.hat"))               
+dimnames(mat.dcdiag) <- list(NULL,c("clones","lambda.max","ms.error","r.squared","r.hat"))               
 mat.dcdiag
 ```
 
 ```
 ##      clones   lambda.max    ms.error    r.squared    r.hat
-## [1,]      1 0.0010388885 0.013733190 0.0009974044 1.001534
-## [2,]     10 0.0009929232 0.008450080 0.0007712377 1.004060
-## [3,]     50 0.0010165349 0.013395569 0.0010058643 1.001171
-## [4,]    100 0.0010561432 0.007795492 0.0006619290 1.003630
+## [1,]      1 0.0010141096 0.013277849 0.0011774550 1.000211
+## [2,]     10 0.0009974422 0.005448884 0.0005409417 1.004193
+## [3,]     50 0.0010117860 0.034108618 0.0034140173 1.003933
+## [4,]    100 0.0010183431 0.024380237 0.0019785190 1.005101
 ```
 
 # References
