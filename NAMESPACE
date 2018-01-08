@@ -3,7 +3,6 @@
 export(fit_ggcr)
 export(ggcr_model)
 export(prep_data)
-import(dclone)
+import(dcmle)
 import(parallel)
-importFrom(stats,coef)
 importFrom(stats,sd)
