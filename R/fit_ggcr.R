@@ -22,6 +22,7 @@
 #' @keywords package
 #' @importFrom stats sd
 #' @import dcmle
+#' @import dclone
 #' @import parallel
 
 #' @export
