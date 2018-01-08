@@ -192,7 +192,7 @@ gelman.diag(post_inf[[length(clo)]])
 ## 1.01
 ```
 
-Parameters $a$ and $b$ seem to be slightly auto- and cross-correlated. 
+Parameters a and b seem to be slightly auto- and cross-correlated. 
 
 ## Sensitivity to priors
 
