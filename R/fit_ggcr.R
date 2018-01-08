@@ -20,10 +20,9 @@
 #' @references Link, W. A. and Eaton, M. J. (2012), On thinning of chains in MCMC. Methods in Ecology and Evolution, 3: 112–115. doi:10.1111/j.2041-210X.2011.00131.x
 #' @author Gilbert Marzolin, Olivier Gimenez
 #' @keywords package
-#' @import dclone
-#' @import parallel
-#' @importFrom stats coef
 #' @importFrom stats sd
+#' @import dcmle
+#' @import parallel
 
 #' @export
 
@@ -35,7 +34,7 @@ params <- c("a","b","k","psi","sigeta")
 # get descriptors of dataset
 dat_features <- prep_data(mydata)
 
-# updating the priors from one clone to the next to speed up convergence 
+# updating the priors from one clone to the next to speed up convergence
 # length(par)=5:the last param is sigeta but updating works on pri
 # the last of which being log.sigeta
 # dcsd is datacloning sd ie product of standard deviation by square root of nclones
@@ -66,18 +65,18 @@ for (i in 1:dim(ms)[1]){
 	state[i,n1]<- NA
 }
 return(state)
-}   
+}
 
-# list of data 
+# list of data
 dat <- list(mydata = mydata, nind = dat_features$nind, nyears = dat_features$nyears, first = dat_features$first, age = dat_features$age, pri = upfun(), clo = 1, st = known_state(mydata,2))
 
 cl <- makePSOCKcluster(3)
 
-# Run the MCMC analysis 
+# Run the MCMC analysis
     m <- lapply(clo, function(z)
          jags.parfit( cl = cl, data = dclone(dat, n.clones = z,attrib = TRUE, unchanged = c("nyears", "nind")),
-         params = params, model = ggcr_model, 
-         n.update = nu, n.iter = ni, thin = nt, 
+         params = params, model = ggcr_model,
+         n.update = nu, n.iter = ni, thin = nt,
          n.chains = nc, multiply = NULL, update = "pri", updatefun = upfun,
          initsfun = NULL, flavour = c("jags"), partype = c("parchains")))
 
@@ -85,4 +84,4 @@ stopCluster(cl)
 
 return(m)
 
-}   
+}
