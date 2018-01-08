@@ -42,6 +42,11 @@ First, we need to load the package:
 library(GammaGompertzCR)
 ```
 
+```
+## Thanks for using package GammaGompertzCR. 
+##     Check out https://github.com/oliviergimenez/GammaGompertzCR for an example.
+```
+
 Then, we read in some data. Below we use a fragment of the dipper dataset `dipper_tiny` used by Marzolin et al. (2011) and provided with the package. The complete dataset `dipper_complete` is also provided. Detections are the 1's, non-detections the 2's.
 
 ```r
@@ -108,20 +113,20 @@ summary(post_inf[[length(clo)]])
 ##    plus standard error of the mean:
 ## 
 ##          Mean      SD  DC SD  Naive SE Time-series SE  R hat
-## a      0.1185 0.01704 0.1704 0.0003111      0.0003163 1.0016
-## b      0.4858 0.02880 0.2880 0.0005258      0.0005803 0.9996
-## k      4.8993 0.03116 0.3116 0.0005688      0.0005794 1.0000
-## psi    1.4007 0.03173 0.3173 0.0005793      0.0005223 1.0028
-## sigeta 0.6725 0.02079 0.2079 0.0003795      0.0003693 1.0018
+## a      0.1185 0.01723 0.1723 0.0003145      0.0003225 0.9995
+## b      0.4868 0.02826 0.2826 0.0005160      0.0005081 1.0010
+## k      4.8995 0.03179 0.3179 0.0005805      0.0005688 1.0013
+## psi    1.4014 0.03241 0.3241 0.0005917      0.0005918 0.9996
+## sigeta 0.6724 0.02091 0.2091 0.0003818      0.0003763 1.0022
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##           2.5%    25%    50%    75%  97.5%
-## a      0.08709 0.1066 0.1178 0.1299 0.1530
-## b      0.43066 0.4668 0.4853 0.5049 0.5445
-## k      4.83784 4.8783 4.8990 4.9193 4.9624
-## psi    1.33890 1.3797 1.4004 1.4227 1.4615
-## sigeta 0.63368 0.6578 0.6717 0.6869 0.7138
+## a      0.08706 0.1067 0.1174 0.1297 0.1542
+## b      0.43182 0.4675 0.4863 0.5062 0.5424
+## k      4.83570 4.8774 4.8999 4.9214 4.9612
+## psi    1.33556 1.3805 1.4011 1.4230 1.4648
+## sigeta 0.63374 0.6579 0.6718 0.6869 0.7139
 ```
 
 Let's represent survival as a function of age at the population level. 
@@ -141,10 +146,10 @@ plot(grid_age,S,xlab='age',ylab='estimated survival',lwd=2,type='l')
 
 ## Convergence diagnostics
 
-First have a look at the traceplots for all parameter estimates got with the last (ascending order) number of clones:
+First have a look at the traceplots for all parameter estimates that we obtained with the last (ascending order) number of clones:
 
 ```r
-plot(post_inf[[length(clo)]], ask = FALSE)
+plot(post_inf[[length(clo)]], ask = TRUE)
 ```
 
 ![](README_files/figure-html/unnamed-chunk-8-1.png)<!-- -->![](README_files/figure-html/unnamed-chunk-8-2.png)<!-- -->
@@ -156,12 +161,12 @@ autocorr.diag(post_inf[[length(clo)]])
 ```
 
 ```
-##                    a            b            k          psi       sigeta
-## Lag 0    1.000000000  1.000000000  1.000000000  1.000000000  1.000000000
-## Lag 5    0.030184833  0.048114885  0.014649514  0.009786769 -0.033877473
-## Lag 25   0.003633738  0.011803517 -0.023727382 -0.018687015 -0.016427022
-## Lag 50   0.052861621  0.009671075 -0.006063120 -0.010921114 -0.023380666
-## Lag 250 -0.027373198 -0.008081355  0.006816099 -0.010441071 -0.004372722
+##                     a            b            k          psi      sigeta
+## Lag 0    1.0000000000  1.000000000  1.000000000  1.000000000 1.000000000
+## Lag 5    0.0344650219 -0.027349395 -0.015760295  0.001375407 0.001969149
+## Lag 25   0.0097737538  0.004886749  0.021157276 -0.004250552 0.011828727
+## Lag 50  -0.0004097896 -0.029179821 -0.013871670  0.010121597 0.004734142
+## Lag 250  0.0022794338  0.007089348  0.001216246 -0.005261328 0.018063070
 ```
 
 ```r
@@ -180,8 +185,8 @@ gelman.diag(post_inf[[length(clo)]])
 ##        Point est. Upper C.I.
 ## a               1       1.00
 ## b               1       1.00
-## k               1       1.00
-## psi             1       1.01
+## k               1       1.01
+## psi             1       1.00
 ## sigeta          1       1.01
 ## 
 ## Multivariate psrf
@@ -247,11 +252,11 @@ mat.dcdiag
 ```
 
 ```
-##      clones  lambda.max    ms.error    r.squared    r.hat
-## [1,]      1 0.001039622 0.009694830 0.0009672591 1.000673
-## [2,]     10 0.000995005 0.009500466 0.0009247287 1.006274
-## [3,]     50 0.001037673 0.004159729 0.0004105004 1.004457
-## [4,]    100 0.001020274 0.011891176 0.0010564432 1.004462
+##      clones   lambda.max    ms.error    r.squared    r.hat
+## [1,]      1 0.0010388885 0.013733190 0.0009974044 1.001534
+## [2,]     10 0.0009929232 0.008450080 0.0007712377 1.004060
+## [3,]     50 0.0010165349 0.013395569 0.0010058643 1.001171
+## [4,]    100 0.0010561432 0.007795492 0.0006619290 1.003630
 ```
 
 # References
