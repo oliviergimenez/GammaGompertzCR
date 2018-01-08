@@ -152,7 +152,9 @@ First have a look at the traceplots for all parameter estimates that we obtained
 plot(post_inf[[length(clo)]], ask = TRUE)
 ```
 
-![](README_files/figure-html/unnamed-chunk-8-1.png)<!-- -->![](README_files/figure-html/unnamed-chunk-8-2.png)<!-- -->
+![](README_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+
+![](README_files/figure-html/unnamed-chunk-8-2.png)<!-- -->
 
 Now checking some correlations:
 
