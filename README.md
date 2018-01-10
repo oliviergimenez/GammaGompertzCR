@@ -110,20 +110,20 @@ summary(post_inf[[length(clo)]])
 ##    plus standard error of the mean:
 ## 
 ##          Mean      SD  DC SD  Naive SE Time-series SE  R hat
-## a      0.1182 0.01689 0.1689 0.0003083      0.0003271 1.0047
-## b      0.4861 0.02858 0.2858 0.0005219      0.0005378 1.0014
-## k      4.8997 0.03112 0.3112 0.0005682      0.0005838 1.0005
-## psi    1.4025 0.03171 0.3171 0.0005790      0.0005900 1.0002
-## sigeta 0.6721 0.02067 0.2067 0.0003774      0.0003914 0.9996
+## a      0.1187 0.01721 0.1721 0.0003142      0.0003184 0.9996
+## b      0.4858 0.02840 0.2840 0.0005184      0.0005186 0.9998
+## k      4.8999 0.03184 0.3184 0.0005814      0.0005729 1.0010
+## psi    1.4031 0.03177 0.3177 0.0005801      0.0005802 1.0020
+## sigeta 0.6723 0.02120 0.2120 0.0003871      0.0003871 0.9999
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##           2.5%    25%    50%    75%  97.5%
-## a      0.08783 0.1062 0.1174 0.1291 0.1538
-## b      0.43088 0.4673 0.4862 0.5055 0.5430
-## k      4.83993 4.8797 4.8995 4.9201 4.9617
-## psi    1.34211 1.3806 1.4019 1.4239 1.4660
-## sigeta 0.63315 0.6579 0.6717 0.6861 0.7140
+## a      0.08708 0.1068 0.1181 0.1298 0.1546
+## b      0.43072 0.4671 0.4856 0.5046 0.5423
+## k      4.83788 4.8780 4.9004 4.9218 4.9615
+## psi    1.34099 1.3821 1.4027 1.4248 1.4677
+## sigeta 0.63147 0.6576 0.6718 0.6864 0.7150
 ```
 
 Let's represent survival as a function of age at the population level. 
@@ -140,6 +140,10 @@ plot(grid_age,S,xlab='age',ylab='estimated survival',lwd=2,type='l')
 ```
 
 ![](README_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+
+## How to choose the precision, number of iterations and clones?
+
+For the Gamma-Gompertz model, all parameters are positive. The user begins with a quite moderate precision, say 10, for the normal priors. This precision is only valid during the run with the first element of vector clone. For the second element of clone and the following ones, mean and precision of a parameter prior are chosen as being the posterior mean and precision of this same parameter obtained at the previous run (function `update`). Several chains run in parallel may converge to different values according to their starting points, while the standard deviation (sd) of the parameter estimates may be quite large. Then, one increases the new prior initial precision `initprec` from 100 or 1000, associated with new `initmeans` picked in the neighborhood of the previous mean estimates, and start the iterations again. To choose among the different values, we look at the corresponding tests `lambda.max`, `ms.error` and `r.squared`. In the above example, with `prec = 10`, `lamba.max` varies around 0.12 according to the number of clones, while with `prec = 100` or `prec = 1000`, it decreases to 0.002, which indicates a more relevant choice. Again, the statistical accuracy is a function of the sample size but not of the number of cloned copies (Lele et al. 2010). Regarding the number of iterations, `ni`, the plots of the different chains usually help. For each parameter, a display by chain of the iterations can be obtained with `densityplot(post_inf[[1]][,"a"])`, the `'[[1]]'` being for the first element of vector clone. 
 
 ## Convergence diagnostics
 
@@ -159,12 +163,12 @@ autocorr.diag(post_inf[[length(clo)]])
 ```
 
 ```
-##                    a           b            k          psi       sigeta
-## Lag 0    1.000000000  1.00000000  1.000000000  1.000000000  1.000000000
-## Lag 5    0.046175987  0.03720741 -0.003431181  0.017214707  0.027955122
-## Lag 25  -0.028721273 -0.03515151 -0.026505472 -0.002058186 -0.025006507
-## Lag 50  -0.006907885  0.03447667 -0.014191058  0.010450045  0.004082727
-## Lag 250 -0.013078322 -0.01389665  0.045134460  0.027270016  0.015126684
+##                   a           b            k           psi       sigeta
+## Lag 0   1.000000000 1.000000000  1.000000000  1.0000000000  1.000000000
+## Lag 5   0.004885454 0.007062062 -0.007529550  0.0003981668  0.020619596
+## Lag 25  0.028170386 0.039102982  0.007367834 -0.0093045888  0.018273569
+## Lag 50  0.003122581 0.003448430 -0.009122560  0.0285703985 -0.004180051
+## Lag 250 0.013335939 0.012153872 -0.006019243 -0.0068175773 -0.025717130
 ```
 
 ```r
@@ -181,15 +185,15 @@ gelman.diag(post_inf[[length(clo)]])
 ## Potential scale reduction factors:
 ## 
 ##        Point est. Upper C.I.
-## a               1       1.02
-## b               1       1.01
+## a               1       1.00
+## b               1       1.00
 ## k               1       1.00
-## psi             1       1.00
+## psi             1       1.01
 ## sigeta          1       1.00
 ## 
 ## Multivariate psrf
 ## 
-## 1.01
+## 1
 ```
 
 Parameters a and b seem to be slightly auto- and cross-correlated. 
@@ -260,10 +264,10 @@ mat.dcdiag
 
 ```
 ##      clones   lambda.max    ms.error    r.squared    r.hat
-## [1,]      1 0.0010141096 0.013277849 0.0011774550 1.000211
-## [2,]     10 0.0009974422 0.005448884 0.0005409417 1.004193
-## [3,]     50 0.0010117860 0.034108618 0.0034140173 1.003933
-## [4,]    100 0.0010183431 0.024380237 0.0019785190 1.005101
+## [1,]      1 0.0010108009 0.007055683 0.0006908974 1.002480
+## [2,]     10 0.0009812864 0.018414260 0.0016752113 1.003646
+## [3,]     50 0.0010256574 0.011075997 0.0010300549 1.000944
+## [4,]    100 0.0010446431 0.008833334 0.0008841003 1.001552
 ```
 
 # References
