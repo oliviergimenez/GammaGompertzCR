@@ -1,5 +1,4 @@
 # Fitting a Gamma-Gompertz survival model to capture-recapture data collected on free-ranging animal populations
-Gilbert Marzolin and Olivier Gimenez
 
 ## In brief
   
