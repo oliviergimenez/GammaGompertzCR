@@ -1,17 +1,11 @@
----
-title: "Fitting a Gamma-Gompertz survival model to capture-recapture data collected on free-ranging animal populations"
-author: "Gilbert Marzolin and Olivier Gimenez"
-date: "12 January 2018"
-output: 
-  html_document: 
-    keep_md: yes
----
+# Fitting a Gamma-Gompertz survival model to capture-recapture data collected on free-ranging animal populations
+Gilbert Marzolin and Olivier Gimenez
 
-# In brief
+## In brief
   
 `GammaGompertzCR` is an R package that allows estimating survival in free-ranging animal populations using a Gompertz capture-recapture model with a Gamma frailty to deal with individual heterogeneity. It uses data cloning in the Bayesian framework to get maximum likelihood parameter estimates (Lele et al. 2007). Data cloning uses multiple copies of the data to produce prior-invariant inferences and a normal distribution centered at the maximum likelihood estimates. In addition, this method allows detecting non-identifiable parameters (Lele et al. 2010). To use the package, users should be familiar with Bayesian MCMC techniques and in particular how to interpret convergence diagnostics. We refer to Robert and Casella (2010) for an introduction to Bayesian MCMC techniques with R and to King et al. (2009) for an introduction for ecologists.
 
-# Installation
+## Installation
 
 This repository hosts the development version of the package. Assuming `JAGS` is already on your system (otherwise it'll take a minute to [get it](http://mcmc-jags.sourceforge.net/), you can install `GammaGompertzCR` as follows:
 
@@ -21,7 +15,7 @@ library("devtools")
 install_github('oliviergimenez/GammaGompertzCR')
 ```
 
-# Getting help, reporting an issue or contribute
+## Getting help, reporting an issue or contribute
 
 To report bugs/issues/feature requests, please file an [issue](https://github.com/oliviergimenez/GammaGompertzCR/issues). These are very welcome!
 
@@ -29,9 +23,9 @@ Feel free to contribute to the repository by forking and submitting a pull reque
 
 If you prefer to email, feel free to drop a message to the Gilbert and Olivier (see the DESCRIPTION file of this repository for their contact details).
 
-# A session example
+## A session example
 
-## Preliminary steps
+### Preliminary steps
 
 First, we need to load the package:
 
@@ -61,7 +55,7 @@ head(dipper_tiny)
 ## [6,]    1    1    1    2    2    2    2    2    2
 ```
 
-## Model fitting
+### Model fitting
 
 Now let's fit the Gamma-Gompertz model to these capture-recapture data:
 
@@ -141,11 +135,11 @@ plot(grid_age,S,xlab='age',ylab='estimated survival',lwd=2,type='l')
 
 ![](README_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
-## How to choose the precision, number of iterations and clones?
+### How to choose the precision, number of iterations and clones?
 
 For the Gamma-Gompertz model, all parameters are positive. The user begins with a quite moderate precision, say 10, for the normal priors. This precision is only valid during the run with the first element of vector clone. For the second element of clone and the following ones, mean and precision of a parameter prior are chosen as being the posterior mean and precision of this same parameter obtained at the previous run (function `update`). Several chains run in parallel may converge to different values according to their starting points, while the standard deviation (sd) of the parameter estimates may be quite large. Then, one increases the new prior initial precision `initprec` from 100 or 1000, associated with new `initmeans` picked in the neighborhood of the previous mean estimates, and start the iterations again. To choose among the different values, we look at the corresponding tests `lambda.max`, `ms.error` and `r.squared`. In the above example, with `prec = 10`, `lamba.max` varies around 0.12 according to the number of clones, while with `prec = 100` or `prec = 1000`, it decreases to 0.002, which indicates a more relevant choice. Again, the statistical accuracy is a function of the sample size but not of the number of cloned copies (Lele et al. 2010). Regarding the number of iterations, `ni`, the plots of the different chains usually help. For each parameter, a display by chain of the iterations can be obtained with `densityplot(post_inf[[1]][,"a"])`, the `'[[1]]'` being for the first element of vector clone. 
 
-## Convergence diagnostics
+### Convergence diagnostics
 
 First have a look at the traceplots for all parameter estimates that we obtained with the last (ascending order) number of clones:
 
@@ -198,7 +192,7 @@ gelman.diag(post_inf[[length(clo)]])
 
 Parameters a and b seem to be slightly auto- and cross-correlated. 
 
-## Sensitivity to priors
+### Sensitivity to priors
 
 It is good advice to check if changing the priors leads to similar posterior results. In our case, the choice of `initmeans` is made through trial and error, because the models we're dealing with have likelihood with multiple spikes. For instance, we might begin with vague priors: `initmeans = c(1,1,5,2,-0.5), initprec=10, clo= c(1,50,100)`, which yields `c(0.11,0.51,4.39,1.44,0.41)` with quite large standard deviation. Modifying the prior means can affect the posterior estimates. Hence, additional tests are required. For each number of clones, the posterior variances of the parameters are divided by that obtained with `min(clo)` to get scaled variances. When increasing the number of clones, the means of the parameters converge to the maximum likelihood estimates while their scaled variances decrease to reach a lower bound. We get a visual threshold indicating the minimal number of clones to agree with
 the desired results (Solymos 2010) by plotting the scaled variances or their logs against the number of clones.
@@ -241,7 +235,7 @@ plot(dct, type= "log.var")
 
 ![](README_files/figure-html/unnamed-chunk-10-2.png)<!-- -->
 
-## Checking parameter identifiability
+### Checking parameter identifiability
 
 Data cloning allows testing identifiability rather easily (Lele 2010). When some parameters are not estimable, the largest eigenvalue of the posterior covariance matrix `lambda.max` does not tend to 0. When it tends to 0, the parameters are estimable and the results are independent of prior choice. Two other statistics `ms.error` and `r.squared` are used to test the normality of the limit. Notice that the statistical accuracy is a function of the sample size but not of the number of cloned copies (Lele et al.2010). 
 
@@ -270,7 +264,7 @@ mat.dcdiag
 ## [4,]    100 0.0010446431 0.008833334 0.0008841003 1.001552
 ```
 
-# References
+## References
 
 King R, Morgan BJT, Gimenez O and Brooks S (2009). Bayesian Analysis for Population Ecology. Chapman & Hall/CRC Interdisciplinary Statistics.
 
