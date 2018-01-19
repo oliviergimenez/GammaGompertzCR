@@ -275,6 +275,8 @@ Lele, SR, K Nadeem, and B Schmuland. 2010. Estimability and Likelihood Inference
 
 Marzolin, G, A Charmantier, and O Gimenez. 2011. Frailty in State-Space Models: Application to Actuarial Senescence in the Dipper. Ecology 92: 562–67.
 
+Marzolin, G, O Gimenez (2018). Fitting a Gamma-Gompertz survival model to capture-recapture data collected on free-ranging animal populations. Journal of Open Source Software, 3(21), 216, https://doi.org/10.21105/joss.00216
+ 
 Missov, TI. 2013. Gamma-Gompertz Life Expectancy at Birth. Demographic Research 28: 259–270.
 
 R Core Team. 2016. R: A Language and Environment for Statistical Computing. Vienna, Austria: R Foundation for Statistical Computing. http://www.R-project.org/.
