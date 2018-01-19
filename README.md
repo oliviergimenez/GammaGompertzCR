@@ -269,13 +269,13 @@ mat.dcdiag
 
 King R, Morgan BJT, Gimenez O and Brooks S (2009). Bayesian Analysis for Population Ecology. Chapman & Hall/CRC Interdisciplinary Statistics.
 
-Lele, SR, D Dennis, and F Lutscher. 2007. Data Cloning: Easy Maximum Likelihood Estimation for Complex Ecological Models Using Bayesian Markov Chain Monte Carlo Methods. Ecology Letters 10: 551–63.
+Lele SR, Dennis D and Lutscher F. 2007. Data Cloning: Easy Maximum Likelihood Estimation for Complex Ecological Models Using Bayesian Markov Chain Monte Carlo Methods. Ecology Letters 10: 551–63.
 
-Lele, SR, K Nadeem, and B Schmuland. 2010. Estimability and Likelihood Inference for Generalized Linear Mixed Models Using Data Cloning. Journal of the American Statistical Association 105: 1617–25.
+Lele SR, Nadeem K and Schmuland B. 2010. Estimability and Likelihood Inference for Generalized Linear Mixed Models Using Data Cloning. Journal of the American Statistical Association 105: 1617–25.
 
-Marzolin, G, A Charmantier, and O Gimenez. 2011. Frailty in State-Space Models: Application to Actuarial Senescence in the Dipper. Ecology 92: 562–67.
+Marzolin G, Charmantier A, and Gimenez O. 2011. Frailty in State-Space Models: Application to Actuarial Senescence in the Dipper. Ecology 92: 562–67.
 
-Marzolin, G, O Gimenez (2018). Fitting a Gamma-Gompertz survival model to capture-recapture data collected on free-ranging animal populations. Journal of Open Source Software, 3(21), 216, https://doi.org/10.21105/joss.00216
+Marzolin G and Gimenez O (2018). Fitting a Gamma-Gompertz survival model to capture-recapture data collected on free-ranging animal populations. Journal of Open Source Software, 3(21), 216, https://doi.org/10.21105/joss.00216
  
 Missov, TI. 2013. Gamma-Gompertz Life Expectancy at Birth. Demographic Research 28: 259–270.
 
