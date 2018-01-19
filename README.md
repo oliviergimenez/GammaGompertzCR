@@ -1,5 +1,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1154931.svg)](https://doi.org/10.5281/zenodo.1154931)
 
+[![DOI](http://joss.theoj.org/papers/10.21105/joss.00216/status.svg)](https://doi.org/10.21105/joss.00216)
+
 # Fitting a Gamma-Gompertz survival model to capture-recapture data collected on free-ranging animal populations
 
 ## In brief
