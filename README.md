@@ -1,12 +1,10 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1154931.svg)](https://doi.org/10.5281/zenodo.1154931) [![DOI](http://joss.theoj.org/papers/10.21105/joss.00216/status.svg)](https://doi.org/10.21105/joss.00216)
 
-# Fitting a Gamma-Gompertz survival model to capture-recapture data collected on free-ranging animal populations
-
-## In brief
+# In brief
   
-`GammaGompertzCR` ([Marzolin & Gimenez 2018](http://joss.theoj.org/papers/10.21105/joss.00216)) is an R package that allows estimating survival in free-ranging animal populations using a Gompertz capture-recapture model with a Gamma frailty to deal with individual heterogeneity. It uses data cloning in the Bayesian framework to get maximum likelihood parameter estimates (Lele et al. 2007). Data cloning uses multiple copies of the data to produce prior-invariant inferences and a normal distribution centered at the maximum likelihood estimates. In addition, this method allows detecting non-identifiable parameters (Lele et al. 2010). To use the package, users should be familiar with Bayesian MCMC techniques and in particular how to interpret convergence diagnostics. We refer to Robert and Casella (2010) for an introduction to Bayesian MCMC techniques with R and to King et al. (2009) for an introduction for ecologists.
+`GammaGompertzCR` is an R package that allows estimating survival in free-ranging animal populations using a Gompertz capture-recapture model with a Gamma frailty to deal with individual heterogeneity. It uses data cloning in the Bayesian framework to get maximum likelihood parameter estimates (Lele et al. 2007). Data cloning uses multiple copies of the data to produce prior-invariant inferences and a normal distribution centered at the maximum likelihood estimates. In addition, this method allows detecting non-identifiable parameters (Lele et al. 2010). To use the package, users should be familiar with Bayesian MCMC techniques and in particular how to interpret convergence diagnostics. We refer to Robert and Casella (2010) for an introduction to Bayesian MCMC techniques with R and to King et al. (2009) for an introduction for ecologists.
 
-## Installation
+# Installation
 
 This repository hosts the development version of the package. Assuming `JAGS` is already on your system (otherwise it'll take a minute to [get it](http://mcmc-jags.sourceforge.net/), you can install `GammaGompertzCR` as follows:
 
@@ -16,7 +14,7 @@ library("devtools")
 install_github('oliviergimenez/GammaGompertzCR')
 ```
 
-## Getting help, reporting an issue or contribute
+# Getting help, reporting an issue or contribute
 
 To report bugs/issues/feature requests, please file an [issue](https://github.com/oliviergimenez/GammaGompertzCR/issues). These are very welcome!
 
@@ -24,11 +22,11 @@ Feel free to contribute to the repository by forking and submitting a pull reque
 
 If you prefer to email, feel free to drop a message to the Gilbert and Olivier (see the DESCRIPTION file of this repository for their contact details).
 
-## A session example
+# A session example
 
-### Preliminary steps
+## Preliminary steps
 
-First, we need to load the package:
+First, we need to load the `GammaGompertzCR` package as well as the `dcmle` that we will need:
 
 ```r
 library(GammaGompertzCR)
@@ -37,6 +35,46 @@ library(GammaGompertzCR)
 ```
 ## Thanks for using package GammaGompertzCR. 
 ##     Check out https://github.com/oliviergimenez/GammaGompertzCR for an example.
+```
+
+```r
+library(dcmle)
+```
+
+```
+## Loading required package: dclone
+```
+
+```
+## Loading required package: coda
+```
+
+```
+## Loading required package: parallel
+```
+
+```
+## Loading required package: Matrix
+```
+
+```
+## dclone 2.1-2 	 2016-03-11
+```
+
+```
+## dcmle 0.3-1 	 2016-03-11
+```
+
+```
+## 
+## Attaching package: 'dcmle'
+```
+
+```
+## The following objects are masked from 'package:coda':
+## 
+##     chanames, crosscorr.plot, gelman.diag, gelman.plot,
+##     geweke.diag, heidel.diag, raftery.diag, varnames
 ```
 
 Then, we read in some data. Below we use a fragment of the dipper dataset `dipper_tiny` used by Marzolin et al. (2011) and provided with the package. The complete dataset `dipper_complete` is also provided. Detections are the 1's, non-detections the 2's.
@@ -56,7 +94,7 @@ head(dipper_tiny)
 ## [6,]    1    1    1    2    2    2    2    2    2
 ```
 
-### Model fitting
+## Model fitting
 
 Now let's fit the Gamma-Gompertz model to these capture-recapture data:
 
@@ -104,21 +142,21 @@ summary(post_inf[[length(clo)]])
 ## 1. Empirical mean and standard deviation for each variable,
 ##    plus standard error of the mean:
 ## 
-##          Mean      SD  DC SD  Naive SE Time-series SE  R hat
-## a      0.1187 0.01721 0.1721 0.0003142      0.0003184 0.9996
-## b      0.4858 0.02840 0.2840 0.0005184      0.0005186 0.9998
-## k      4.8999 0.03184 0.3184 0.0005814      0.0005729 1.0010
-## psi    1.4031 0.03177 0.3177 0.0005801      0.0005802 1.0020
-## sigeta 0.6723 0.02120 0.2120 0.0003871      0.0003871 0.9999
+##          Mean      SD  DC SD  Naive SE Time-series SE R hat
+## a      0.1182 0.01694 0.1694 0.0003093      0.0003092 1.002
+## b      0.4871 0.02856 0.2856 0.0005215      0.0005147 1.000
+## k      4.8999 0.03105 0.3105 0.0005670      0.0005912 1.000
+## psi    1.4020 0.03131 0.3131 0.0005716      0.0005625 1.001
+## sigeta 0.6713 0.02142 0.2142 0.0003912      0.0003854 1.003
 ## 
 ## 2. Quantiles for each variable:
 ## 
 ##           2.5%    25%    50%    75%  97.5%
-## a      0.08708 0.1068 0.1181 0.1298 0.1546
-## b      0.43072 0.4671 0.4856 0.5046 0.5423
-## k      4.83788 4.8780 4.9004 4.9218 4.9615
-## psi    1.34099 1.3821 1.4027 1.4248 1.4677
-## sigeta 0.63147 0.6576 0.6718 0.6864 0.7150
+## a      0.08749 0.1063 0.1176 0.1294 0.1539
+## b      0.43243 0.4677 0.4872 0.5067 0.5427
+## k      4.83694 4.8789 4.9006 4.9213 4.9593
+## psi    1.34133 1.3811 1.4006 1.4229 1.4640
+## sigeta 0.63044 0.6565 0.6709 0.6858 0.7140
 ```
 
 Let's represent survival as a function of age at the population level. 
@@ -136,11 +174,11 @@ plot(grid_age,S,xlab='age',ylab='estimated survival',lwd=2,type='l')
 
 ![](README_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
-### How to choose the precision, number of iterations and clones?
+## How to choose the precision, number of iterations and clones?
 
 For the Gamma-Gompertz model, all parameters are positive. The user begins with a quite moderate precision, say 10, for the normal priors. This precision is only valid during the run with the first element of vector clone. For the second element of clone and the following ones, mean and precision of a parameter prior are chosen as being the posterior mean and precision of this same parameter obtained at the previous run (function `update`). Several chains run in parallel may converge to different values according to their starting points, while the standard deviation (sd) of the parameter estimates may be quite large. Then, one increases the new prior initial precision `initprec` from 100 or 1000, associated with new `initmeans` picked in the neighborhood of the previous mean estimates, and start the iterations again. To choose among the different values, we look at the corresponding tests `lambda.max`, `ms.error` and `r.squared`. In the above example, with `prec = 10`, `lamba.max` varies around 0.12 according to the number of clones, while with `prec = 100` or `prec = 1000`, it decreases to 0.002, which indicates a more relevant choice. Again, the statistical accuracy is a function of the sample size but not of the number of cloned copies (Lele et al. 2010). Regarding the number of iterations, `ni`, the plots of the different chains usually help. For each parameter, a display by chain of the iterations can be obtained with `densityplot(post_inf[[1]][,"a"])`, the `'[[1]]'` being for the first element of vector clone. 
 
-### Convergence diagnostics
+## Convergence diagnostics
 
 First have a look at the traceplots for all parameter estimates that we obtained with the last (ascending order) number of clones:
 
@@ -153,17 +191,16 @@ plot(post_inf[[length(clo)]], ask = TRUE)
 Now checking some correlations:
 
 ```r
-library(coda)
 autocorr.diag(post_inf[[length(clo)]])    
 ```
 
 ```
-##                   a           b            k           psi       sigeta
-## Lag 0   1.000000000 1.000000000  1.000000000  1.0000000000  1.000000000
-## Lag 5   0.004885454 0.007062062 -0.007529550  0.0003981668  0.020619596
-## Lag 25  0.028170386 0.039102982  0.007367834 -0.0093045888  0.018273569
-## Lag 50  0.003122581 0.003448430 -0.009122560  0.0285703985 -0.004180051
-## Lag 250 0.013335939 0.012153872 -0.006019243 -0.0068175773 -0.025717130
+##                     a            b             k         psi       sigeta
+## Lag 0    1.0000000000  1.000000000  1.0000000000  1.00000000  1.000000000
+## Lag 5    0.0295019859  0.006720507 -0.0007752711 -0.02088471 -0.016978811
+## Lag 25   0.0007827941  0.019774407  0.0308653197  0.00354215  0.020744847
+## Lag 50  -0.0342719405 -0.017393540 -0.0293516686  0.01155295  0.019323252
+## Lag 250  0.0106310015 -0.021151298 -0.0156915502  0.00201559  0.005046463
 ```
 
 ```r
@@ -180,11 +217,11 @@ gelman.diag(post_inf[[length(clo)]])
 ## Potential scale reduction factors:
 ## 
 ##        Point est. Upper C.I.
-## a               1       1.00
+## a               1       1.01
 ## b               1       1.00
 ## k               1       1.00
-## psi             1       1.01
-## sigeta          1       1.00
+## psi             1       1.00
+## sigeta          1       1.01
 ## 
 ## Multivariate psrf
 ## 
@@ -193,7 +230,7 @@ gelman.diag(post_inf[[length(clo)]])
 
 Parameters a and b seem to be slightly auto- and cross-correlated. 
 
-### Sensitivity to priors
+## Sensitivity to priors
 
 It is good advice to check if changing the priors leads to similar posterior results. In our case, the choice of `initmeans` is made through trial and error, because the models we're dealing with have likelihood with multiple spikes. For instance, we might begin with vague priors: `initmeans = c(1,1,5,2,-0.5), initprec=10, clo= c(1,50,100)`, which yields `c(0.11,0.51,4.39,1.44,0.41)` with quite large standard deviation. Modifying the prior means can affect the posterior estimates. Hence, additional tests are required. For each number of clones, the posterior variances of the parameters are divided by that obtained with `min(clo)` to get scaled variances. When increasing the number of clones, the means of the parameters converge to the maximum likelihood estimates while their scaled variances decrease to reach a lower bound. We get a visual threshold indicating the minimal number of clones to agree with
 the desired results (Solymos 2010) by plotting the scaled variances or their logs against the number of clones.
@@ -205,22 +242,6 @@ clo <- c(1,10,50,100)
 ```
 
 We use function `dctable` to do the job:
-
-```r
-library(dclone)
-```
-
-```
-## Loading required package: parallel
-```
-
-```
-## Loading required package: Matrix
-```
-
-```
-## dclone 2.1-2 	 2016-03-11
-```
 
 ```r
 dct <- do.call(dctable,post_inf) 
@@ -236,7 +257,7 @@ plot(dct, type= "log.var")
 
 ![](README_files/figure-html/unnamed-chunk-10-2.png)<!-- -->
 
-### Checking parameter identifiability
+## Checking parameter identifiability
 
 Data cloning allows testing identifiability rather easily (Lele 2010). When some parameters are not estimable, the largest eigenvalue of the posterior covariance matrix `lambda.max` does not tend to 0. When it tends to 0, the parameters are estimable and the results are independent of prior choice. Two other statistics `ms.error` and `r.squared` are used to test the normality of the limit. Notice that the statistical accuracy is a function of the sample size but not of the number of cloned copies (Lele et al.2010). 
 
@@ -244,39 +265,29 @@ Get the necessary elements and checking:
 
 
 ```r
-u<-v<-w<-x<-y<-numeric(0)
-for (i in 1:length(clo)){
-  u[i] <- clo[i]
-  v[i] <- dcdiag(post_inf[[i]])$lambda.max
-  w[i] <- dcdiag(post_inf[[i]])$ms.error
-  x[i] <- dcdiag(post_inf[[i]])$r.squared
-  y[i] <- dcdiag(post_inf[[i]])$r.hat
-}
-mat.dcdiag <- matrix(c(u,v,w,x,y),c(length(clo),5)) 
+mat.dcdiag<- t(sapply(post_inf,dcdiag))
 dimnames(mat.dcdiag) <- list(NULL,c("clones","lambda.max","ms.error","r.squared","r.hat"))               
 mat.dcdiag
 ```
 
 ```
-##      clones   lambda.max    ms.error    r.squared    r.hat
-## [1,]      1 0.0010108009 0.007055683 0.0006908974 1.002480
-## [2,]     10 0.0009812864 0.018414260 0.0016752113 1.003646
-## [3,]     50 0.0010256574 0.011075997 0.0010300549 1.000944
-## [4,]    100 0.0010446431 0.008833334 0.0008841003 1.001552
+##      clones lambda.max   ms.error    r.squared    r.hat   
+## [1,] 1      0.001001928  0.008665452 0.0007978197 1.000715
+## [2,] 10     0.001008014  0.02980244  0.00295392   1.002615
+## [3,] 50     0.001057018  0.006642011 0.0006647053 1.001721
+## [4,] 100    0.0009865647 0.01145292  0.0009542366 1.003452
 ```
 
-## References
+# References
 
 King R, Morgan BJT, Gimenez O and Brooks S (2009). Bayesian Analysis for Population Ecology. Chapman & Hall/CRC Interdisciplinary Statistics.
 
-Lele SR, Dennis D and Lutscher F. 2007. Data Cloning: Easy Maximum Likelihood Estimation for Complex Ecological Models Using Bayesian Markov Chain Monte Carlo Methods. Ecology Letters 10: 551–63.
+Lele, SR, D Dennis, and F Lutscher. 2007. Data Cloning: Easy Maximum Likelihood Estimation for Complex Ecological Models Using Bayesian Markov Chain Monte Carlo Methods. Ecology Letters 10: 551–63.
 
-Lele SR, Nadeem K and Schmuland B. 2010. Estimability and Likelihood Inference for Generalized Linear Mixed Models Using Data Cloning. Journal of the American Statistical Association 105: 1617–25.
+Lele, SR, K Nadeem, and B Schmuland. 2010. Estimability and Likelihood Inference for Generalized Linear Mixed Models Using Data Cloning. Journal of the American Statistical Association 105: 1617–25.
 
-Marzolin G, Charmantier A, and Gimenez O. 2011. Frailty in State-Space Models: Application to Actuarial Senescence in the Dipper. Ecology 92: 562–67.
+Marzolin, G, A Charmantier, and O Gimenez. 2011. Frailty in State-Space Models: Application to Actuarial Senescence in the Dipper. Ecology 92: 562–67.
 
-Marzolin G and Gimenez O (2018). Fitting a Gamma-Gompertz survival model to capture-recapture data collected on free-ranging animal populations. Journal of Open Source Software, 3(21), 216, https://doi.org/10.21105/joss.00216
- 
 Missov, TI. 2013. Gamma-Gompertz Life Expectancy at Birth. Demographic Research 28: 259–270.
 
 R Core Team. 2016. R: A Language and Environment for Statistical Computing. Vienna, Austria: R Foundation for Statistical Computing. http://www.R-project.org/.
@@ -284,5 +295,3 @@ R Core Team. 2016. R: A Language and Environment for Statistical Computing. Vien
 Robert CP and Casella G (2010). Introducing Monte Carlo Methods with R. Springer.
 
 Solymos, P. 2010. dclone: Data Cloning in R. The R Journal 2: 29-37.
-
-
